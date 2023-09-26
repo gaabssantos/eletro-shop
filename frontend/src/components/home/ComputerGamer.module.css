@@ -1,0 +1,32 @@
+.categories {
+  border: 1px solid #0f7ed9;
+  margin: 2rem 5rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.category {
+  display: inline-block;
+  padding: 2rem;
+  margin: 1rem 2rem;
+  border: 1px solid #0f7ed9;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: 0.5s;
+  text-align: center;
+}
+
+.category:hover {
+  background-color: #54a3e4;
+}
+
+.category svg {
+  font-size: 2rem;
+  margin: 0 1rem;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+}

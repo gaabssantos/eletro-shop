@@ -1,0 +1,33 @@
+.footer {
+  background-color: #0f7ed9;
+  padding: 2rem;
+  text-align: center;
+}
+
+h3 {
+  padding: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+.footer img {
+  margin: 0 0.3rem;
+}
+
+.paymentMethods {
+  width: 270px;
+  display: inline-block;
+}
+
+.security {
+  margin: 0 2rem;
+  display: inline-block;
+}
+
+.security img {
+    cursor: pointer;
+    transition: .5s;
+}
+
+.security img:hover {
+    scale: .9;
+}

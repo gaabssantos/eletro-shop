@@ -1,0 +1,70 @@
+{
+  "itens": [
+    {
+      "id": 1,
+      "name": "Smartphone Sansung Galaxy A14",
+      "price_pix": "250,00",
+      "price_original": "450,00",
+      "price_divisor": "45,00",
+      "image": "https://m.media-amazon.com/images/I/71N-h-67rsL._AC_SX679_.jpg",
+      "page": 1,
+      "number": 0,
+      "hide": false
+    },
+    {
+      "id": 2,
+      "name": "Headphone Fone de Ouvido Havit HV-H2232d",
+      "price_pix": "96,99",
+      "price_original": "144,90",
+      "price_divisor": "14,49",
+      "image": "https://m.media-amazon.com/images/I/51FUhlHc42L._AC_SX679_.jpg",
+      "page": 1,
+      "number": 1,
+      "hide" : false
+    },
+    {
+      "id": 3,
+      "name": "Monitor LG 19.5'' LED HD - HDMI",
+      "price_pix": "409,90",
+      "price_original": "779,00",
+      "price_divisor": "77,90",
+      "image": "https://m.media-amazon.com/images/I/819C4audmiL.__AC_SX300_SY300_QL70_ML2_.jpg",
+      "page": 1,
+      "number": 2,
+      "hide" : false
+    },
+    {
+      "id": 4,
+      "name": "SONY FDR-AX53 4K ULTRA HD",
+      "price_pix": "790,00",
+      "price_original": "1.200,00",
+      "price_divisor": "120,00",
+      "image": "https://m.media-amazon.com/images/I/81WKAbtAHLL._AC_SX450_.jpg",
+      "page": 2,
+      "number": 3,
+      "hide" : true
+    },
+    {
+      "id": 5,
+      "name": "Gabinete Gamer Aigo DarkFlash",
+      "price_pix": "120,00",
+      "price_original": "230,00",
+      "price_divisor": "23,00",
+      "image": "https://m.media-amazon.com/images/I/41DAafXKLWL._AC_SX679_.jpg",
+      "page": 2,
+      "number": 4,
+      "hide" : true
+    },
+    {
+      "id": 6,
+      "name": "HyperX Solocast HMIS1XXXBK/G",
+      "price_pix": "190,00",
+      "price_original": "299,90",
+      "price_divisor": "29.99",
+      "image": "https://m.media-amazon.com/images/I/719CKJ0e2IL._AC_SY450_.jpg",
+      "page": 2,
+      "number": 5,
+      "hide" : true
+    }
+  ]
+}

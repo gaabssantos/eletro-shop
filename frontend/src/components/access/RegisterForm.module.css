@@ -1,0 +1,125 @@
+h1 {
+  font-size: 1.3em;
+  margin-bottom: 1rem;
+}
+
+#rules {
+  background-color: #fff;
+  display: block;
+  border: 1px solid #555555;
+  margin-top: 10px;
+  border-radius: 20px;
+  padding: 30px;
+}
+
+#rules li:hover {
+  cursor: default;
+  text-decoration: none;
+}
+
+.container {
+  margin: 3rem auto;
+  width: 30vw;
+}
+
+.formContainer {
+  max-width: 100vw;
+  box-shadow: 2px 1px 5px #000;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.formControl {
+  margin: 1rem 0;
+}
+
+.formControl input {
+  border: none;
+  border-bottom: 1px solid #0f7ed9;
+  padding: 0.5rem;
+  width: 95%;
+  font-size: 0.8rem;
+}
+
+.formControl input:focus {
+  outline: 0;
+}
+
+.formControl button {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  border: 3px solid #0f7ed9;
+  transition: 0.5s;
+}
+
+.formControl button:hover {
+  background-color: #0f7ed9;
+  color: #fff;
+}
+
+.formControl a {
+  color: #0f7ed9;
+  transition: 0.5s;
+  margin-left: 5px;
+}
+
+.formControl a:hover {
+  color: #065fa7;
+}
+
+.names {
+  display: flex;
+}
+
+.names input {
+  margin-right: 30px;
+}
+
+.birth {
+    display: flex;
+}
+
+.birth input {
+    margin-right: 20px;
+}
+
+
+#passwordError {
+  margin-top: 10px;
+  color: #fc4e4e;  
+}
+
+#passwordError svg {
+  font-size: 1.2rem;
+  margin-right: 5px;
+}
+
+.emptyInput {
+  background-color: #ec7878;
+  padding: 1rem;
+  border: 3px solid #e71010;
+  border-radius: 50px;
+  color: #7e2121;
+}
+
+.hide {
+  display: none;
+}
+
+.error {
+  border-bottom: 1px solid #ec7878 !important;
+}
+
+.errorRule {
+  color: #fc4e4e;
+}
+
+.alrightRule {
+  color: #5bf167;
+}
