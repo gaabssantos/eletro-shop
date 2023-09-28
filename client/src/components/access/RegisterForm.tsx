@@ -12,7 +12,7 @@ import {
   MouseEvent,
 } from "react";
 import $ from "jquery";
-import "jquery-mask-plugin";
+import axios from "axios";
 
 /* ICONS */
 import { BiSolidErrorCircle } from "react-icons/bi";
@@ -20,7 +20,7 @@ import { BiSolidErrorCircle } from "react-icons/bi";
 const RegisterForm = () => {
   const [year, setYear] = useState<number>(0);
   const [passwordCorrect, setPasswordCorrect] = useState<boolean>(false);
-  const [emptyFields, setEmptyFields] = useState<boolean>(false);
+  const [successForm, setSuccessForm] = useState<boolean>(false);
 
   useEffect(() => {
     const date = new Date();
@@ -130,18 +130,8 @@ const RegisterForm = () => {
     }
   };
 
-  const handleClickRegister = (e: MouseEvent<HTMLElement>) => {
+  const handleClickRegister = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
-    $.each($("form input"), (index, value) => {
-      if ((value as HTMLInputElement).value === "") {
-        $("." + styles.emptyInput).removeClass(styles.hide);
-        setEmptyFields(true);
-      } else {
-        $("." + styles.emptyInput).addClass(styles.hide);
-        setEmptyFields(false);
-      }
-    });
 
     if (!passwordCorrect) {
       $("." + styles.emptyInput).removeClass(styles.hide);
@@ -149,7 +139,37 @@ const RegisterForm = () => {
       $("." + styles.emptyInput).addClass(styles.hide);
     }
 
-    window.location.href = `http://localhost:8080/registrar`;
+    if (
+      $("#name").val() !== "" &&
+      $("#lastname").val() !== "" &&
+      $("#email").val() !== "" &&
+      $("#phone").val() !== "" &&
+      $("#address").val() !== "" &&
+      $("#password").val() !== "" &&
+      $("#day").val() !== "" &&
+      $("#month").val() !== "" &&
+      $("#year").val() !== ""
+    ) {
+      setSuccessForm(true);
+    }
+
+    if (passwordCorrect === true && successForm === true) {
+      axios
+        .post("http://localhost:8080/register", {
+          name: $("#name").val(),
+          lastname: $("#lastname").val(),
+          email: $("#email").val(),
+          phone: $("#phone").val(),
+          address: $("#address").val(),
+          password: $("#password").val(),
+          day: $("#day").val(),
+          month: $("#month").val(),
+          year: $("#year").val(),
+        })
+        .then((response) => {
+          console.log(response.headers);
+        });
+    }
   };
 
   return (
@@ -158,14 +178,14 @@ const RegisterForm = () => {
         <h1>Registre sua conta</h1>
         <div className={`${styles.emptyInput} ${styles.hide}`}>
           <span>
-            {emptyFields
+            {!successForm
               ? "Preencha todos os campos."
               : !passwordCorrect
               ? "A senha não está segura."
               : ""}
           </span>
         </div>
-        <form action="" method="post" id="form-register">
+        <form method="post" id="form-register">
           <div className={`${styles.formControl} ${styles.names}`}>
             <input
               type="text"
@@ -247,6 +267,7 @@ const RegisterForm = () => {
             <input
               type="text"
               id="day"
+              name="day"
               onChange={(e) => handleDateChange(e, "day")}
               onBlur={handleDateChangeBlur}
               placeholder="Dia"
@@ -254,6 +275,7 @@ const RegisterForm = () => {
             <input
               type="text"
               id="month"
+              name="month"
               placeholder="Mês"
               onChange={(e) => handleDateChange(e, "month")}
               onBlur={handleDateChangeBlur}
@@ -261,12 +283,15 @@ const RegisterForm = () => {
             <input
               type="text"
               id="year"
+              name="year"
               placeholder="Ano"
               onChange={(e) => handleDateChange(e, "year")}
             />
           </div>
           <div className={styles.formControl}>
-            <button onClick={handleClickRegister}>Registrar</button>
+            <button onClick={handleClickRegister} id="btn-register">
+              Registrar
+            </button>
           </div>
         </form>
       </div>

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.40",
+    "axios": "^1.5.1",
     "express": "^4.18.2",
     "hamburger-react": "^2.5.0",
     "jquery": "^3.7.1",
