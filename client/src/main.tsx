@@ -8,6 +8,7 @@ import AccessLogin from "./routes/AccessLogin.tsx";
 import AccessRegister from "./routes/AccessRegister.tsx";
 import Home from "./routes/Home.tsx";
 import App from "./App.tsx";
+import Verification from "./routes/Verification.tsx";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/registrar",
         element: <AccessRegister />,
+      },
+      {
+        path: "/verificar",
+        element: <Verification />,
       },
     ],
   },
