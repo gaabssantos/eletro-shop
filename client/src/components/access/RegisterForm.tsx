@@ -4,13 +4,7 @@
 import styles from "./RegisterForm.module.css";
 
 /* IMPORTS */
-import {
-  useState,
-  useEffect,
-  ChangeEvent,
-  FocusEvent,
-  MouseEvent,
-} from "react";
+import { useState, ChangeEvent, FocusEvent, MouseEvent } from "react";
 import $ from "jquery";
 import axios from "axios";
 
@@ -18,14 +12,11 @@ import axios from "axios";
 import { BiSolidErrorCircle } from "react-icons/bi";
 
 const RegisterForm = () => {
-  const [year, setYear] = useState<number>(0);
+  const date = new Date();
+  const serverLink = "localhost:8080";
+
   const [passwordCorrect, setPasswordCorrect] = useState<boolean>(false);
   const [successForm, setSuccessForm] = useState<boolean>(false);
-
-  useEffect(() => {
-    const date = new Date();
-    setYear(date.getFullYear());
-  }, []);
 
   const validDigits = (value: string) => {
     return value.replace(/[^0-9]/g, "");
@@ -48,8 +39,8 @@ const RegisterForm = () => {
       e.target.value = "12";
     }
 
-    if (parseInt(e.target.value) > year && type === "year") {
-      e.target.value = year.toString();
+    if (parseInt(e.target.value) > date.getFullYear() && type === "year") {
+      e.target.value = date.getFullYear().toString();
     }
   };
 
@@ -134,9 +125,9 @@ const RegisterForm = () => {
     e.preventDefault();
 
     if (!passwordCorrect) {
-      $("." + styles.emptyInput).removeClass(styles.hide);
+      $("." + styles.errorInput).removeClass(styles.hide);
     } else {
-      $("." + styles.emptyInput).addClass(styles.hide);
+      $("." + styles.errorInput).addClass(styles.hide);
     }
 
     if (
@@ -148,14 +139,11 @@ const RegisterForm = () => {
       $("#password").val() !== "" &&
       $("#day").val() !== "" &&
       $("#month").val() !== "" &&
-      $("#year").val() !== ""
+      $("#year").val() !== "" &&
+      passwordCorrect
     ) {
-      setSuccessForm(true);
-    }
-
-    if (passwordCorrect === true && successForm === true) {
       axios
-        .post("http://localhost:8080/register", {
+        .post(`http://${serverLink}/register`, {
           name: $("#name").val(),
           lastname: $("#lastname").val(),
           email: $("#email").val(),
@@ -167,7 +155,18 @@ const RegisterForm = () => {
           year: $("#year").val(),
         })
         .then((response) => {
-          console.log(response.headers);
+          setSuccessForm(true);
+          if (response.data.error) {
+            $("#error-message").removeClass(styles.hide);
+            $("#error-text").html(response.data.message);
+          } else {
+            $("#success-message").removeClass(styles.hide);
+            $("#success-text").html(response.data.message);
+            setTimeout(() => {}, 3000);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
         });
     }
   };
@@ -176,15 +175,26 @@ const RegisterForm = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <h1>Registre sua conta</h1>
-        <div className={`${styles.emptyInput} ${styles.hide}`}>
+        <div className={`${styles.errorInput} ${styles.hide}`}>
           <span>
-            {!successForm
-              ? "Preencha todos os campos."
-              : !passwordCorrect
-              ? "A senha não está segura."
-              : ""}
+            {!successForm ? "Preencha todos os campos corretamente." : ""}
           </span>
         </div>
+
+        <div
+          id="error-message"
+          className={`${styles.errorMessage} ${styles.hide}`}
+        >
+          <span id="error-text">...</span>
+        </div>
+
+        <div
+          id="success-message"
+          className={`${styles.successMessage} ${styles.hide}`}
+        >
+          <span id="success-text">...</span>
+        </div>
+
         <form method="post" id="form-register">
           <div className={`${styles.formControl} ${styles.names}`}>
             <input

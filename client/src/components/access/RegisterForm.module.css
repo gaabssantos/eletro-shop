@@ -100,12 +100,20 @@ h1 {
   margin-right: 5px;
 }
 
-.emptyInput {
+.errorInput, .errorMessage {
   background-color: #ec7878;
   padding: 1rem;
   border: 3px solid #e71010;
   border-radius: 50px;
   color: #7e2121;
+}
+
+.successMessage {
+  background-color: #4de259;
+  padding: 1rem;
+  border: 3px solid #309138;
+  border-radius: 50px;
+  color: #216426;
 }
 
 .hide {
