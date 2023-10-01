@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 
-require("./models/User.ts");
+require("./models/User.js");
 const UserModel = mongoose.model("users");
 
 app.use(express.json());
