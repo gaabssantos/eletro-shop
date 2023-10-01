@@ -1,5 +1,5 @@
-const mongooseUser = require("mongoose");
-const Schema = mongooseUser.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const User = new Schema({
   name: {
@@ -32,4 +32,4 @@ const User = new Schema({
   },
 });
 
-mongooseUser.model("users", User);
+mongoose.model("users", User);

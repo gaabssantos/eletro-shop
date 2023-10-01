@@ -6,7 +6,7 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 
 require("./models/User.js");
-const UserModel = mongoose.model("users");
+const User = mongoose.model("users");
 
 app.use(express.json());
 app.use(cors());
@@ -36,7 +36,7 @@ app.post("/register", (req, res) => {
   const month = req.body.month;
   const year = req.body.year;
 
-  UserModel.findOne({email: email})
+  User.findOne({email: email})
   .then((user) => {
     if (user) {
       res.send({error: true, message: "Este e-mail já está em uso."});
@@ -44,7 +44,7 @@ app.post("/register", (req, res) => {
 
       const birth = day + "/" + month + "/" + year;
 
-      const newUser = new UserModel({
+      const newUser = new User({
         name: name,
         lastname: lastName,
         email: email,
