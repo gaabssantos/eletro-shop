@@ -1,3 +1,4 @@
+// Library
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -5,19 +6,20 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 
+// Models
 require("./models/User.js");
 const User = mongoose.model("users");
-
 require("./models/Verifications.js");
 const Verification = mongoose.model("verifications");
 
+// Configs
 app.use(express.json());
 app.use(cors());
 
-// BODY PARSER
+// Body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// DATABASE
+// Database
 mongoose.Promise = global.Promise;
 mongoose
   .connect("mongodb://localhost/eletroshop")
@@ -28,6 +30,7 @@ mongoose
     console.log("Error connected to Mongo.");
   });
 
+// Routes
 app.post("/register", (req, res) => {
   const name = req.body.name;
   const lastName = req.body.lastname;
@@ -131,6 +134,7 @@ app.post("/register", (req, res) => {
   // })
 });
 
+// Open server
 const PORT = 8080;
 app.listen(PORT, () => {
   console.log("Server is running.");
