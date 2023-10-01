@@ -7,9 +7,9 @@ const Verification = new Schema({
     required: true,
   },
   code: {
-    type: String,
+    type: Number,
     required: true,
   },
 });
 
-mongoose.model("verification", Verification);
+mongoose.model("verifications", Verification);

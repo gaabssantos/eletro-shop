@@ -1,16 +1,15 @@
-// (11) 993205-9928
-
-/* CSS */
+// CSS
 import styles from "./RegisterForm.module.css";
 
-/* IMPORTS */
+// Imports
 import { useState, ChangeEvent, FocusEvent, MouseEvent } from "react";
 import $ from "jquery";
 import axios from "axios";
 
-/* ICONS */
+// Icons
 import { BiSolidErrorCircle } from "react-icons/bi";
 
+// Component de Register
 const RegisterForm = () => {
   const date = new Date();
   const serverLink = "localhost:8080";
@@ -18,10 +17,12 @@ const RegisterForm = () => {
   const [passwordCorrect, setPasswordCorrect] = useState<boolean>(false);
   const [successForm, setSuccessForm] = useState<boolean>(false);
 
+  // Checar se é um número.
   const validDigits = (value: string) => {
     return value.replace(/[^0-9]/g, "");
   };
 
+  // Handle para checar o input de data.
   const handleDateChange = (e: ChangeEvent<HTMLInputElement>, type: string) => {
     const updatedValue = validDigits(e.target.value);
 
@@ -44,12 +45,14 @@ const RegisterForm = () => {
     }
   };
 
+  // Handle para adicionar um 0 em números menores que 10 na data.
   const handleDateChangeBlur = (e: FocusEvent<HTMLInputElement>) => {
     if (parseInt(e.target.value) < 10 && !e.target.value.includes("0")) {
       e.target.value = "0" + e.target.value;
     }
   };
 
+  // Handle para checar se a senha está de acordo com a segurança.
   const handleCheckPassword = (e: ChangeEvent<HTMLInputElement>) => {
     if (
       $("#password").val() != $("#repeat-password").val() &&
@@ -107,11 +110,13 @@ const RegisterForm = () => {
     }
   };
 
+  // Handle para checar se o número só tem números.
   const handleCheckPhone = (e: ChangeEvent<HTMLInputElement>) => {
     const updatedValue = validDigits(e.target.value);
     e.target.value = updatedValue;
   };
 
+  // Handle para adicionar máscara no fone.
   const handleMaskPhone = (e: FocusEvent<HTMLInputElement>) => {
     const phoneMask = /(^[0-9]{2})([0-9]{5})([0-9]{4})/;
     const result = e.target.value.match(phoneMask);
@@ -121,6 +126,7 @@ const RegisterForm = () => {
     }
   };
 
+  // Handle ao clicar o botão de register.
   const handleClickRegister = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -156,13 +162,15 @@ const RegisterForm = () => {
         })
         .then((response) => {
           setSuccessForm(true);
+          $("#error-message").addClass(styles.hide);
+          $("#success -message").addClass(styles.hide);
           if (response.data.error) {
             $("#error-message").removeClass(styles.hide);
             $("#error-text").html(response.data.message);
           } else {
+            $("input").val("");
             $("#success-message").removeClass(styles.hide);
             $("#success-text").html(response.data.message);
-            setTimeout(() => {}, 3000);
           }
         })
         .catch((err) => {

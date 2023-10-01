@@ -8,6 +8,9 @@ const bcrypt = require("bcrypt");
 require("./models/User.js");
 const User = mongoose.model("users");
 
+require("./models/Verifications.js");
+const Verification = mongoose.model("verifications");
+
 app.use(express.json());
 app.use(cors());
 
@@ -36,45 +39,96 @@ app.post("/register", (req, res) => {
   const month = req.body.month;
   const year = req.body.year;
 
-  User.findOne({email: email})
-  .then((user) => {
-    if (user) {
-      res.send({error: true, message: "Este e-mail já está em uso."});
-    } else {
+  const randomNumber1 = Math.floor(Math.random() * (9 - 1) + 1);
+  const randomNumber2 = Math.floor(Math.random() * (9 - 1) + 1);
+  const randomNumber3 = Math.floor(Math.random() * (9 - 1) + 1);
+  const randomNumber4 = Math.floor(Math.random() * (9 - 1) + 1);
+  const randomNumber5 = Math.floor(Math.random() * (9 - 1) + 1);
+  const randomNumber6 = Math.floor(Math.random() * (9 - 1) + 1);
 
-      const birth = day + "/" + month + "/" + year;
+  const code =
+    randomNumber1.toString() +
+    randomNumber2.toString() +
+    randomNumber3.toString() +
+    randomNumber4.toString() +
+    randomNumber5.toString() +
+    randomNumber6.toString();
 
-      const newUser = new User({
-        name: name,
-        lastname: lastName,
-        email: email,
-        phone: phone,
-        address: address,
-        password: password,
-        birth: birth,
-      });
+  Verification.findOne({ email: email })
+    .then((user) => {
+      if (user) {
+        res.send({
+          error: true,
+          message: "Este e-mail já está para ser verificado.",
+        });
+      } else {
+        const newVerification = new Verification({
+          email: email,
+          code: parseInt(code),
+        });
 
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) {
-            res.send({error: true, message: "Erro ao salvar o usuário."});
-          }
-
-          newUser.password = hash;
-
-          newUser.save().then(() => {
-            res.send({error: false, message: "Usuário cadastrado com sucesso."});
-          }).catch((err) => {
-            console.log(err);
+        newVerification
+          .save()
+          .then(() => {
+            res.send({
+              error: false,
+              message: "Cheque seu e-mail para verificar sua conta.",
+            });
           })
+          .catch((err) => {
+            res.send({
+              error: true,
+              message: "Houve um erro ao salvar a verificação.",
+            });
+          });
+      }
+    })
+    .catch((err) => {
+      res.send({
+        error: true,
+        message: "Deu um erro ao verificar a verificação.",
+      });
+    });
 
-        })
-      })
+  // User.findOne({email: email})
+  // .then((user) => {
+  //   if (user) {
+  //     res.send({error: true, message: "Este e-mail já está em uso."});
+  //   } else {
 
-    }
-  }).catch((err) => {
-    res.send({error: true, message: "Houve um erro ao encontrar o usuário."})
-  })
+  //     const birth = day + "/" + month + "/" + year;
+
+  //     const newUser = new User({
+  //       name: name,
+  //       lastname: lastName,
+  //       email: email,
+  //       phone: phone,
+  //       address: address,
+  //       password: password,
+  //       birth: birth,
+  //     });
+
+  //     bcrypt.genSalt(10, (err, salt) => {
+  //       bcrypt.hash(newUser.password, salt, (err, hash) => {
+  //         if (err) {
+  //           res.send({error: true, message: "Erro ao salvar o usuário."});
+  //         }
+
+  //         newUser.password = hash;
+
+  //         newUser.save().then(() => {
+  //           res.send({error: false, message: "Usuário cadastrado com sucesso."});
+  //         }).catch((err) => {
+  //           console.log(err);
+  //         })
+
+  //       })
+  //     })
+
+  //   }
+  // }).catch((err) => {
+  //   res.send({error: true, message: "Houve um erro ao encontrar o usuário."})
+  // })
 });
 
 const PORT = 8080;
