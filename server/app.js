@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
+const nodemailer = require("nodemailer");
 
 // Models
 require("./models/User.js");
@@ -29,6 +30,15 @@ mongoose
   .catch((err) => {
     console.log("Error connected to Mongo.");
   });
+
+// Nodemailer
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "gabriel.oliveira20500@gmail.com",
+    pass: "rpyx unez ltyh dkok",
+  },
+});
 
 // Routes
 app.post("/register", (req, res) => {
@@ -73,6 +83,19 @@ app.post("/register", (req, res) => {
         newVerification
           .save()
           .then(() => {
+            transporter
+              .sendMail({
+                from: "gabriel.oliveira20500@gmail.com",
+                to: "srcraft875@gmail.com",
+                subject: "Isso é um teste!",
+                text: "Olá, teste!",
+              })
+              .then((message) => {
+                console.log(message);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
             res.send({
               error: false,
               message: "Cheque seu e-mail para verificar sua conta.",
