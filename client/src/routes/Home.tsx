@@ -3,6 +3,7 @@ import "./Home.module.css";
 
 /* Imports */
 import { BsFillTagFill, BsPc } from "react-icons/bs";
+import axios from "axios";
 
 /* Components */
 import Navbar from "../components/other/Navbar";
@@ -11,6 +12,11 @@ import ComputerGamer from "../components/home/ComputerGamer";
 import Footer from "../components/home/Footer";
 
 const Home = () => {
+
+  // axios.post("", {}).then((res) => {
+
+  // })
+
   return (
     <div>
       <header>

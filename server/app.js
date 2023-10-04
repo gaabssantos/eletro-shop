@@ -6,12 +6,17 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const nodemailer = require("nodemailer");
+const dotenv = require("dotenv").config();
 
 // Models
 require("./models/User.js");
 const User = mongoose.model("users");
 require("./models/Verifications.js");
 const Verification = mongoose.model("verifications");
+
+// Others
+const serverLink = "localhost:8080";
+const clientLink = "localhost:5173";
 
 // Configs
 app.use(express.json());
@@ -35,8 +40,8 @@ mongoose
 let transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "gabriel.oliveira20500@gmail.com",
-    pass: "rpyx unez ltyh dkok",
+    user: process.env.GMAIL_EMAIL,
+    pass: process.env.GMAIL_PASSWORD,
   },
 });
 
@@ -85,10 +90,10 @@ app.post("/register", (req, res) => {
           .then(() => {
             transporter
               .sendMail({
-                from: "gabriel.oliveira20500@gmail.com",
-                to: "srcraft875@gmail.com",
-                subject: "Isso é um teste!",
-                text: "Olá, teste!",
+                from: process.env.GMAIL_EMAIL,
+                to: email,
+                subject: "Link de verificação",
+                text: `Para poder verificar sua conta, entre no link: http://${serverLink}/verificar/${code}`,
               })
               .then((message) => {
                 console.log(message);
@@ -155,6 +160,32 @@ app.post("/register", (req, res) => {
   // }).catch((err) => {
   //   res.send({error: true, message: "Houve um erro ao encontrar o usuário."})
   // })
+});
+
+app.get("/verificar/:code", (req, res) => {
+  const code = req.params.code;
+  Verification.findOneAndRemove({ code: code })
+    .then((verificationRemove) => {
+      if (verificationRemove) {
+        res.redirect(`http://${clientLink}/`);
+        res.send({
+          error: false,
+          message: "Você verificou sua conta com sucesso, já pode logar.",
+        });
+      } else {
+        res.redirect(`http://${clientLink}/`);
+        res.send({
+          error: true,
+          message: "Houve um erro ao verificar sua conta",
+        });
+      }
+    })
+    .catch((err) => {
+      res.send({
+        error: true,
+        message: "Houve um erro ao verificar sua conta.",
+      });
+    });
 });
 
 // Open server
